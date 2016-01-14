@@ -133,6 +133,7 @@
 	$(document).ready(function($) {
 
 		// var urlbase = '{!! env("APP_URL") !!}';
+		console.log(urlbase);
 
 		// OBRA CHANGE
 		$('#inputObra').change(function(event) {

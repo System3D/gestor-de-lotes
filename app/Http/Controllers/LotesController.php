@@ -36,7 +36,7 @@ class LotesController extends Controller {
 			}
 
 			JavaScript::put([
-				'urlbase' => env("APP_URL"),
+				'urlbase' => env("APP_URL") . env("APP_URLPREFIX"),
 				'obra_id' => $request->old('obra_id'),
 				'etapa_id' => $request->old('etapa_id'),
 				'etapas' => $etapas,

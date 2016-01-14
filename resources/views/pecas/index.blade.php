@@ -80,7 +80,7 @@
 <script>
 	$(document).ready(function($) {
 
-		var urlbase = '{!! env("APP_URL") !!}';
+		// var urlbase = '{!! env("APP_URL") !!}';
 
 		// OBRA CHANGE -> obtem etapas
 		$('#inputObra').change(function(event) {

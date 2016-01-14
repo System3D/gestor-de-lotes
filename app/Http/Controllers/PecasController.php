@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Lote;
 use DB;
 use Illuminate\Http\Request;
+use JavaScript;
 
 class PecasController extends Controller {
 	/**
@@ -134,6 +135,20 @@ class PecasController extends Controller {
 			$obras = new ObrasController;
 			$obras = $obras->index($request);
 			$lotes = Lote::all();
+
+			if ($request->old('obra_id')) {
+				$etapas = $obras->find($request->old('obra_id'))->etapas->lists('codigo', 'id');
+			} else {
+				$etapas = array();
+			}
+
+			JavaScript::put([
+				'urlbase' => env("APP_URL") . env("APP_URLPREFIX"),
+				'obra_id' => $request->old('obra_id'),
+				'etapa_id' => $request->old('etapa_id'),
+				'etapas' => $etapas,
+				'selected' => $request->old('handles_ids'),
+			]);
 
 			return view('pecas.index', compact('obras', 'lotes'));
 		}
