@@ -1,6 +1,7 @@
 @extends('templates.default')
 @section('content')
 
+{!! Breadcrumbs::render('lotes') !!}
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->

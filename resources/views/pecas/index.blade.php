@@ -1,5 +1,8 @@
 @extends('templates.default')
 @section('content')
+
+{!! Breadcrumbs::render('pecas') !!}
+
 <div class="panel panel-default">
 	<!-- Default panel contents -->
 	<div class="panel-heading">

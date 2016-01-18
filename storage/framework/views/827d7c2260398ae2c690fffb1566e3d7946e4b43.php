@@ -1,4 +1,8 @@
 <?php $__env->startSection('content'); ?>
+
+<?php echo Breadcrumbs::render('pecas'); ?>
+
+
 <div class="panel panel-default">
 	<!-- Default panel contents -->
 	<div class="panel-heading">
