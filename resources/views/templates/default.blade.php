@@ -55,49 +55,11 @@
 
 </head>
 <body class="skin-black">
-    <!-- header logo: style can be found in header.less -->
-    <header class="header">
-        <a href="{{ url('/') }}" class="logo">
-            STEEL<strong class="text-primary">4</strong>WEB
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
 
-        </nav>
-    </header>
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="left-side sidebar-offcanvas">
-
-
-            <section class="sidebar">
-                <!-- Sidebar user panel -->
-
-                <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
-
-                    <li class="{{ Request::is('lotes*') ? 'active' : '' }}">
-                        <a href="{!! url('/lotes') !!}">
-                            <i class="fa fa-th"></i> <span>Gestor de Lotes</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </section>
-            <!-- /.sidebar -->
-
-        </aside>
-
-
-        <aside class="right-side">
+        <!-- <aside class="right-side"> -->
+        <aside class="">
 
             <!-- Main content -->
             <section class="content">

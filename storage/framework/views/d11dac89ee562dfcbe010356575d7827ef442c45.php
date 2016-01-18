@@ -1,5 +1,7 @@
 <?php $__env->startSection('content'); ?>
 
+<?php echo Breadcrumbs::render('lotes'); ?>
+
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
