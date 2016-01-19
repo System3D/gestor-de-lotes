@@ -56,10 +56,79 @@
 </head>
 <body class="skin-black">
 
+    <header class="header">
+        <a class="logo" href="http://steel4web.com.br/new_s4w/saas/admin">
+            <img src="http://steel4web.com.br/new_s4w/assets/img/logo-Steel4web.png" alt="Stell4Web">
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="http://steel4web.com.br/new_s4w/saas/profile/ver"><i class="fa fa-user fa-fw"></i> Perfil do usuário</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="http://steel4web.com.br/new_s4w/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
-        <!-- <aside class="right-side"> -->
-        <aside class="">
+        <aside class="left-side sidebar-offcanvas">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="nav in sidebar-menu" id="side-menu">
+                    <li>
+                        <a href="http://steel4web.com.br/new_s4w/saas/admin" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="http://steel4web.com.br/new_s4w/saas/clientes/listar"><i class="fa fa-users fa-fw"></i> Clientes</a>
+                    </li>
+                    <li>
+                        <a href="http://steel4web.com.br/new_s4w/saas/obras/listar"><i class="fa fa-building-o fa-fw"></i> Obras</a>
+                    </li>
+                    <li>
+                        <a href="http://steel4web.com.br/new_s4w/saas/contatos/listar"><i class="fa fa-phone fa-fw"></i> Contatos</a>
+                    </li>
+                    <li>
+                        <a href="http://steel4web.com.br/new_s4w/saas/usuarios/listar"><i class="fa fa-user fa-fw"></i> Usuários</a>
+                    </li>
+                    <li>
+                        <a href="http://steel4web.com.br/dev/gestor-de-lotes/public/lotes"><i class="fa fa-home fa-fw"></i> Gestor de Lotes</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-print fa-fw"></i> Relatórios</a>
+                    </li>
+                                    <li>
+                        <a href="http://steel4web.com.br/new_s4w/saas/logs/listar"><i class="fa fa-eye fa-fw"></i> Logs</a>
+                    </li>
+                </ul>
+
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <aside class="right-side">
 
             <!-- Main content -->
             <section class="content">

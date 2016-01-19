@@ -10,15 +10,15 @@
 	</div>
 
 	<div class="panel-body">
-	    <!-- Nav tabs -->
-	    <ul class="nav nav-tabs">
-	        <li class="active">
-	            <a href="{{ url('lotes') }}">Conjuntos</a>
-	        </li>
-	        <li>
-	            <a href="{{ url('lotes/pecas') }}">Peças</a>
-	        </li>
-	    </ul>
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="{{ url('lotes') }}">Conjuntos</a>
+			</li>
+			<li>
+				<a href="{{ url('lotes/pecas') }}">Peças</a>
+			</li>
+		</ul>
 	</div>
 
 
@@ -61,7 +61,7 @@
 					</button>
 					<ul class="dropdown-menu" id="lotes">
 						@foreach ($lotes as $lote)
-							<li><a href="#">{{ $lote->descricao }}</a></li>
+						<li><a href="#">{{ $lote->descricao }}</a></li>
 						@endforeach
 					</ul>
 				</div>
@@ -171,6 +171,117 @@
 		}
 
 
+
+		// ON CLICK AT ROW
+		$('#handlesGrid tbody').on( 'click', 'tr', function (e, dt, type, indexes) {
+			// SHOW/HIDE options
+			if( handlesGrid.rows('.selected').data().length ){
+				$('#createLoteForm').find('.loteOptions.hidden').removeClass('hidden');
+			}else{
+				$('#createLoteForm').find('.loteOptions').addClass('hidden');
+			};
+
+
+			var data = handlesGrid.rows( '.selected' ).data().pluck('id');
+			selected = $.makeArray(data);
+			selected = data;
+
+
+	        // // var id = this.id;
+	        // var indx = $.inArray(data[0], selected);
+
+	        // if ( indx === -1 ) {
+	        //     selected.push( data[0] );
+	        // } else {
+	        //     selected.splice( indx, 1 );
+	        // }
+
+	    } );
+
+
+		/* GET HANDLES */
+		$('#getHandles').click(function() {
+			var url = urlbase+'/obras/'+$('#inputObra').val()+'/etapas/'+$('#inputEtapa').val()+'/handles';
+
+			// GET LOTES OF ETAPA
+			$.ajax({
+				url: urlbase+'/obras/'+$('#inputObra').val()+'/etapas/'+$('#inputEtapa').val()+'/lotes',
+				type: 'GET',
+				dataType: 'json',
+				beforeSend: function() {
+					$('.loading.hidden').removeClass('hidden');
+					$('#lotes').addClass('hidden');
+				}
+			})
+			.done(function( data ) {
+				$('#lotes').html('');
+				$('.loading').addClass('hidden');
+				$('#lotes.hidden').removeClass('hidden');
+
+				$.each(data, function(index, val) {
+					$('#lotes').append('<li><a href="/lotes/'+val.id+'">'+val.descricao+'</a></li>');
+				});
+			})
+			.fail(function() {
+
+			});
+
+			handlesGrid.ajax.url( url ).load();
+		});
+
+		/* On form change */
+		$('#createLoteForm').change(function() {
+			$(this).find('.loteOptions').addClass('hidden');
+			$('#getHandles').trigger('click');
+		});
+
+		/* CRIAR LOTE */
+		$('#criarlote').click(function(e) {
+			e.preventDefault();
+
+			var selectedIds = handlesGrid.rows('.selected').data();
+			var handles_ids = Array();
+
+			for (var i = 0 ; i < selectedIds.length; i++) {
+				handles_ids.push( selectedIds[i].id );
+			};
+			$('#inputHandleIds').val( handles_ids.join(",") );
+
+			$.ajax({
+				url: '{{ route("lotes.create") }}',
+				type: 'GET',
+				dataType: 'html',
+				data: {
+					obra_id: $('#inputObra').val(),
+					etapa_id: $('#inputEtapa').val(),
+					// handles_ids: $('#inputHandleIds').val(),
+					handles_ids: handles_ids,
+					grouped: $('#inputGrouped:checked').val(),
+				}
+			})
+			.done(function( data ) {
+
+				$('#modal').find('.modal-content').html(data);
+
+			})
+			.fail(function() {
+
+			})
+			.always(function() {
+
+			});
+
+
+		});
+
+
+		// ON ETAPA CHANGE
+		$('#inputEtapa').change(function(event) {
+
+
+
+		});
+
 		var handlesGrid  = $('#handlesGrid').DataTable({
 			ajax: {
 				url: 	urlbase+'/obras/'+$('#inputObra').val()+'/etapas/'+$('#inputEtapa').val()+'/handles',
@@ -213,133 +324,21 @@
 			rowCallback: function( row, data ) {
 
 
-	            // if ( $.inArray(data.DT_RowId, selected) !== -1 ) {
-	            if ( $.inArray( String(data.id), selected) !== -1 ) {
-	                $(row).addClass('selected');
-	            }
-	        }
-		})
-		.on('preXhr.dt', function ( e, settings, data ) {
-			$('.loading.hidden').removeClass('hidden');
-		})
-		.on('xhr.dt', function ( e, settings, json, xhr ) {
-			$('.loading').addClass('hidden');
-		})
-		.on( 'select', function ( e, dt, type, indexes ) {
-		    handlesGrid[ type ]( indexes ).nodes().to$().addClass( 'selected' );
-		});
-
-
-
-	// ON CLICK AT ROW
-	$('#handlesGrid tbody').on( 'click', 'tr', function (e, dt, type, indexes) {
-		// SHOW/HIDE options
-		if( handlesGrid.rows('.selected').data().length ){
-			$('#createLoteForm').find('.loteOptions.hidden').removeClass('hidden');
-		}else{
-			$('#createLoteForm').find('.loteOptions').addClass('hidden');
-		};
-
-
-		var data = handlesGrid.rows( '.selected' ).data().pluck('id');
-		selected = $.makeArray(data);
-		selected = data;
-
-
-        // // var id = this.id;
-        // var indx = $.inArray(data[0], selected);
-
-        // if ( indx === -1 ) {
-        //     selected.push( data[0] );
-        // } else {
-        //     selected.splice( indx, 1 );
-        // }
-
-	} );
-
-
-	/* GET HANDLES */
-	$('#getHandles').click(function() {
-		var url = urlbase+'/obras/'+$('#inputObra').val()+'/etapas/'+$('#inputEtapa').val()+'/handles';
-
-		// GET LOTES OF ETAPA
-		$.ajax({
-			url: urlbase+'/obras/'+$('#inputObra').val()+'/etapas/'+$('#inputEtapa').val()+'/lotes',
-			type: 'GET',
-			dataType: 'json',
-			beforeSend: function() {
+		            // if ( $.inArray(data.DT_RowId, selected) !== -1 ) {
+		            	if ( $.inArray( String(data.id), selected) !== -1 ) {
+		            		$(row).addClass('selected');
+		            	}
+		            }
+		        })
+			.on('preXhr.dt', function ( e, settings, data ) {
 				$('.loading.hidden').removeClass('hidden');
-				$('#lotes').addClass('hidden');
-			}
-		})
-		.done(function( data ) {
-			$('#lotes').html('');
-			$('.loading').addClass('hidden');
-			$('#lotes.hidden').removeClass('hidden');
-
-			$.each(data, function(index, val) {
-				$('#lotes').append('<li><a href="/lotes/'+val.id+'">'+val.descricao+'</a></li>');
+			})
+			.on('xhr.dt', function ( e, settings, json, xhr ) {
+				$('.loading').addClass('hidden');
+			})
+			.on( 'select', function ( e, dt, type, indexes ) {
+				handlesGrid[ type ]( indexes ).nodes().to$().addClass( 'selected' );
 			});
-		})
-		.fail(function() {
-
-		});
-
-		handlesGrid.ajax.url( url ).load();
-	});
-
-	/* On form change */
-	$('#createLoteForm').change(function() {
-		$(this).find('.loteOptions').addClass('hidden');
-		$('#getHandles').trigger('click');
-	});
-
-	/* CRIAR LOTE */
-	$('#criarlote').click(function(e) {
-		e.preventDefault();
-
-		var selectedIds = handlesGrid.rows('.selected').data();
-		var handles_ids = Array();
-
-		for (var i = 0 ; i < selectedIds.length; i++) {
-			handles_ids.push( selectedIds[i].id );
-		};
-		$('#inputHandleIds').val( handles_ids.join(",") );
-
-		$.ajax({
-			url: '{{ route("lotes.create") }}',
-			type: 'GET',
-			dataType: 'html',
-			data: {
-				obra_id: $('#inputObra').val(),
-				etapa_id: $('#inputEtapa').val(),
-				// handles_ids: $('#inputHandleIds').val(),
-				handles_ids: handles_ids,
-				grouped: $('#inputGrouped:checked').val(),
-			}
-		})
-		.done(function( data ) {
-
-			$('#modal').find('.modal-content').html(data);
-
-		})
-		.fail(function() {
-
-		})
-		.always(function() {
-
-		});
-
-
-	});
-
-
-	// ON ETAPA CHANGE
-	$('#inputEtapa').change(function(event) {
-
-
-
-	});
 
 });
 </script>
@@ -367,6 +366,14 @@
 	@keyframes loadingAnimation {
 		from { transform: rotate(0deg); }
 		to { transform: rotate(359deg); }
+	}
+
+
+	.sidebar ul li {
+	    border-bottom: 1px solid #e7e7e7;
+	}
+	.sidebar ul li a.active {
+	    background-color: #eee;
 	}
 </style>
 @stop
