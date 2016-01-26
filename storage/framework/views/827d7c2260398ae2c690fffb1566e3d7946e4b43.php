@@ -132,7 +132,30 @@
 				{ data: 'POS_PEZ' },
 				{ data: 'QTA_PEZ' },
 				{ data: 'NOM_PRO' },
-				{ data: 'CATEPERFIL' },
+				// { data: 'CATEPERFIL' },
+				{ data:
+					function (data, type, full) {
+						if (type === 'display') {
+						   	if (data.CATEPERFIL == 0) {
+						       	return '<img src="'+urlbase+'/img/icons/0.png" />';
+						   	}
+							else if (data.CATEPERFIL == 1) {
+						       	return '<img src="'+urlbase+'/img/icons/1.png" />';
+							}
+							else if (data.CATEPERFIL == 2) {
+						       	return '<img src="'+urlbase+'/img/icons/2.png" />';
+							}
+							else if (data.CATEPERFIL == 3) {
+						       	return '<img src="'+urlbase+'/img/icons/3.png" />';
+							}
+							else {
+						       	return data.CATEPERFIL;
+							}
+
+						}
+						return data.CATEPERFIL;
+					}
+		        },
 			]
 		})
 		.on('preXhr.dt', function ( e, settings, data ) {

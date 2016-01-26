@@ -113,7 +113,7 @@
                     <li>
                         <a href="http://steel4web.com.br/new_s4w/saas/usuarios/listar"><i class="fa fa-user fa-fw"></i> Usuários</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="http://steel4web.com.br/dev/gestor-de-lotes/public/lotes"><i class="fa fa-home fa-fw"></i> Gestor de Lotes</a>
                     </li>
                     <li>
